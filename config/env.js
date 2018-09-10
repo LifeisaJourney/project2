@@ -80,7 +80,7 @@ function getClientEnvironment(publicUrl) {
         // add your env var here:
         MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
         // add your other variables like ^ thats
-        BETTERDOCTOR_TOKEN: process.env.BETTERDOCTOR_TOKEN,
+        BETTERDOCTOR_TOKEN: process.env.BETTERDOCTOR_TOKEN || 'bitch',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
