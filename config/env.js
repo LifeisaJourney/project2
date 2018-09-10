@@ -78,9 +78,9 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
         // add your env var here:
-        MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
+        MAPBOX_TOKEN: process.env.REACT_APP_MAPBOX_TOKEN,
         // add your other variables like ^ thats
-        BETTERDOCTOR_TOKEN: process.env.BETTERDOCTOR_TOKEN || 'bitch',
+        BETTERDOCTOR_TOKEN: process.env.REACT_APP_BETTERDOCTOR_TOKEN,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
