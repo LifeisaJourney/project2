@@ -3,7 +3,6 @@ import "./style.css";
 import NewForm from '../NewForm';
 import { MAPBOX_TOKEN, BETTERDOCTOR_TOKEN } from '../.env.js';
 import queryString from 'query-string';
-// import Pop from '../Popup';
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 export default class App extends Component {
@@ -65,7 +64,7 @@ export default class App extends Component {
       container: 'mapbox',
       style: 'mapbox://styles/mapbox/streets-v10',
       center: [this.state.lng, this.state.lat],
-      zoom: 14, 
+      zoom: 14,
       minZoom: 12,
       maxZoom: 16,
     });
@@ -91,7 +90,6 @@ export default class App extends Component {
             submitButton={this.submitButton}
           />
         </div>
-        
         {this.state.data.map((eachData) => {
           console.log(eachData)
           return (
