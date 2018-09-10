@@ -23,7 +23,6 @@ export default class App extends Component {
   handleUpdateInput(event) {
     this.setState({ zipcode: event.target.value })
   }
-
   submitButton(task) {
     const geocoder = new window.google.maps.Geocoder()
     geocoder.geocode(
