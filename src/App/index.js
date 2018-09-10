@@ -3,10 +3,9 @@ import "./style.css";
 import NewForm from '../NewForm';
 import {MAPBOX_TOKEN, BETTERDOCTOR_TOKEN} from '../.env.js'
 import queryString from 'query-string'
-import { forEach } from "gl-matrix/src/gl-matrix/vec4";
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props)
     
@@ -17,29 +16,31 @@ class App extends Component {
       lng: -73.992,
       zipcode: "",
     }
-
+    
     this.handleUpdateInput = this.handleUpdateInput.bind(this)
     this.submitButton = this.submitButton.bind(this)
   }
-  
+
   handleUpdateInput(event) {
     this.setState({ zipcode: event.target.value })
   }
   
   submitButton(task) {
     const geocoder = new window.google.maps.Geocoder()
-    geocoder.geocode({
-      address: this.state.zipcode,
-    }, 
-    (results, status) => {
-      if (status=== 'OK'){
-        this.setState({ 
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng(), 
-        })
-        this.getDoctors()
+    geocoder.geocode(
+      {
+        address: this.state.zipcode,
+      }, 
+      (results, status) => {
+        if (status=== 'OK'){
+          this.setState({ 
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(), 
+          });
+          this.getDoctors();
+        }
       }
-    })
+    );
   }
   
   async getDoctors() {
@@ -47,109 +48,49 @@ class App extends Component {
       location: `${this.state.lat}, ${this.state.lng},10`, 
       sort: 'distance-asc',
       skip: 0,
-      limit: 20,
+      limit: 10,
       user_key: `${BETTERDOCTOR_TOKEN}`
     })
     const httpResponse = await fetch(`https://api.betterdoctor.com/2016-03-01/practices?${query}`)
     const body = await httpResponse.json();
     this.setState({
-      data: body.data.filter((practice)=> {
-        return practice.within_search_area
-      })
-    })
-    console.log(body.data[0].distance.toFixed(2))
-  }
-  
-  render() {
-    mapboxgl.accessToken=MAPBOX_TOKEN
+      data: body.data.filter((practice)=> practice.within_search_area)
+    });
+    mapboxgl.accessToken=MAPBOX_TOKEN;
     var map = new mapboxgl.Map({
       container: 'mapbox',
       style: 'mapbox://styles/mapbox/streets-v10',
       center: [this.state.lng, this.state.lat], // starting position [lng, lat]
       zoom: 15, // starting zoom
     });
-    this.state.data.forEach((practice)=> {
-       new mapboxgl.Marker().setLngLat([
-        practice.lon,practice.lat
-      ]) 
-      .addTo(map)
-    }
-  )
+    this.state.data.forEach((practice) => {
+      new mapboxgl.Marker().setLngLat([practice.lon, practice.lat]).addTo(map)
+    });
+  }
   
+  render() {
     return (
       <div>
-            <div>
-              <div>
-                <h1>Find A Doctor Now!</h1>
-              </div>
-              <NewForm 
-                handleUpdateInput={this.handleUpdateInput}
-                zipcode={this.state.zipcode}
-                submitButton={this.submitButton}
-                />
-            </div>
-            {this.state.data.map((eachData) => {
-              console.log(eachData)
-              return (
-                <div>
-                  <h1>{eachData.name}</h1>
-                  <h2>Located {eachData.distance.toFixed(2)}  miles away!</h2>
-                </div>
-              )
-            })}
+        <div>
+          <div>
+            <h1>Find A Doctor Now!</h1>
           </div>
-        )
-      }
-    }
-    
-
-    
-    export default App;
-  //getUserlocation doesn't work
-  //   getLocation = ()=> {
-  //     return new Promise(function (resolve, reject) {
-  //       navigator.geolocation.getCurrentPosition(resolve, reject);
-  //     });
-  //   }
-  //   getLocation()
-  // .then(function(resolved) {
-  //   console.log(resolved)
-  // });
-
-  // getLocation()
-  // .then(function(located){
-  //   document.body.innerHTML = (`You are located at ${located.coords.latitude} and ${located.coords.longitude}`)
-  // })
-
-  // async function main(){
-  //   const located = await getLocation();
-  //   console.log(located);
-  // }
-  // main();
-  // getLocation = ()=> {
-  //       return new Promise(function (resolve, reject) {
-  //         navigator.geolocation.getCurrentPosition(resolve, reject);
-  //       })
-  //       console.log()
-  //     };
-  //     function(resolved) {
-  //         console.log(resolved)
-  //       });
-
-
-    // console.log(body)
-    //////////////////////////////search by doctor
-    // componentDidMount = async () => {
-    //   const httpResponse = await fetch('https://api.betterdoctor.com/2016-03-01/doctors?location=40.738%2C-73.992%2C10&user_location=40.738%2C-73.992&skip=0&limit=30&user_key=' + apiKey);
-
-    //   const body = await httpResponse.json();
-    //   // {console.log(body.data[0].practices[0].visit_address)}
-    //   {console.log(body.data)}
-
-    //////////////////////search by term
-    // componentDidMount = async () => {
-    // const httpResponse = await fetch('https://api.betterdoctor.com/2016-03-01/specialties?limit=100&user_key=' + apiKey);
-    // const body = await httpResponse.json();
-
-    // const httpResponse = await fetch(' https://api.betterdoctor.com/2016-03-01/specialties?fields=radiologist%2C&limit=100&user_key=8a8293089f9ffe8c99bd5a965a82098d')
-    //    const body = await httpResponse.json();
+          <NewForm 
+            handleUpdateInput={this.handleUpdateInput}
+            zipcode={this.state.zipcode}
+            submitButton={this.submitButton}
+            />
+        </div>
+        {this.state.data.map((eachData) => {
+          console.log(eachData)
+          return (
+            <div>
+              <h1>{eachData.name}</h1>
+              <h2>Located {eachData.distance.toFixed(2)}  miles away!</h2>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+}
