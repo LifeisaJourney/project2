@@ -50,6 +50,8 @@ export default class App extends Component {
       limit: 10,
       user_key: `${process.env.BETTERDOCTOR_TOKEN}`
     })
+    console.log(process.env.BETTERDOCTOR_TOKEN);
+    
     const httpResponse = await fetch(`https://api.betterdoctor.com/2016-03-01/practices?${query}`)
     const body = await httpResponse.json();
 
@@ -58,6 +60,7 @@ export default class App extends Component {
     });
 
     mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
+    console.log(process.env.MAPBOX_TOKEN)
     var map = new mapboxgl.Map({
       container: 'mapbox',
       style: 'mapbox://styles/mapbox/streets-v10',
