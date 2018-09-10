@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
 import NewForm from '../NewForm';
-import { MAPBOX_TOKEN, BETTERDOCTOR_TOKEN } from '../.env.js';
 import queryString from 'query-string';
 var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
@@ -49,17 +48,16 @@ export default class App extends Component {
       sort: 'distance-asc',
       skip: 0,
       limit: 10,
-      user_key: `${BETTERDOCTOR_TOKEN}`
+      user_key: `${process.env.BETTERDOCTOR_TOKEN}`
     })
     const httpResponse = await fetch(`https://api.betterdoctor.com/2016-03-01/practices?${query}`)
     const body = await httpResponse.json();
-    console.log(body)
+
     this.setState({
       data: body.data.filter((practice) => practice.within_search_area),
     });
-    console.log(this.state.data.name)
 
-    mapboxgl.accessToken = MAPBOX_TOKEN;
+    mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
     var map = new mapboxgl.Map({
       container: 'mapbox',
       style: 'mapbox://styles/mapbox/streets-v10',
