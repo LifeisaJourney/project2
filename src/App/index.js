@@ -6,6 +6,7 @@ var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 export default class App extends Component {
   constructor(props) {
+    console.log(process.env)
     super(props)
 
     this.state = {
@@ -14,6 +15,7 @@ export default class App extends Component {
       lat: 40.738,
       lng: -73.992,
       zipcode: "",
+      
     }
 
     this.handleUpdateInput = this.handleUpdateInput.bind(this)
