@@ -81,6 +81,7 @@ function getClientEnvironment(publicUrl) {
         MAPBOX_TOKEN: process.env.REACT_APP_MAPBOX_TOKEN,
         // add your other variables like ^ thats
         BETTERDOCTOR_TOKEN: process.env.REACT_APP_BETTERDOCTOR_TOKEN,
+        GOOGLEMAP_TOKEN: process.env.REACT_APP_GOOGLEMAP_TOKEN,
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

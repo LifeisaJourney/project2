@@ -70,12 +70,12 @@ export default class App extends Component {
       minZoom: 12,
       maxZoom: 16,
     });
-
-    var popup = new mapboxgl.Popup({ offset: 25 })
-    .setText("sds")
-
+   
+    
     this.state.data.forEach((practice) => {
-      new mapboxgl.Marker().setLngLat([practice.lon, practice.lat]).addTo(map).setPopup(popup)
+      var popup = new mapboxgl.Popup({ offset: 25 }).setText("sds")
+      new mapboxgl.Marker().setLngLat([practice.lon, practice.lat]).setPopup(popup).addTo(map)
+
     });
   }
 
