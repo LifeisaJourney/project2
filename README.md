@@ -5,7 +5,7 @@
   The idea of this website is to find the nearest doctor based on the input for your zipcode.
 
 <br>
-[Github found here:](https://git.generalassemb.ly/LifeH/project-2-NEED-A-DOC).
+[Github found here:](https://git.generalassemb.ly/LifeH/project-2-NEED-A-DOC)
 
 [Website found here:](https://findadoc.herokuapp.com/)
 
