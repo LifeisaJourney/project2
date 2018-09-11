@@ -70,7 +70,7 @@ export default class App extends Component {
    
     
     this.state.data.forEach((practice) => {
-      var popup = new mapboxgl.Popup({ offset: 25 }).setText("sds")
+      var popup = new mapboxgl.Popup({ offset: 25 }).setText(practice.name)
       new mapboxgl.Marker().setLngLat([practice.lon, practice.lat]).setPopup(popup).addTo(map)
 
     });
@@ -91,7 +91,7 @@ export default class App extends Component {
         </div>
         {this.state.data.map((eachData) => {
           return (
-            <div>
+            <div key={eachData.name}>
               <h1>{eachData.name}</h1>
               <h2>Located {eachData.distance.toFixed(2)}  miles away!</h2>
             </div>
