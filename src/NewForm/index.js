@@ -12,6 +12,7 @@ export default class NewForm extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <input
+            placeholder="Type Zipcode Here"
             onChange={this.props.handleUpdateInput}
             value={this.props.zipcode}
             type="text"
