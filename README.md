@@ -15,4 +15,5 @@
 
 ## Features
 Three APIs: Google Maps, Better Doctor, Mapbox
-React.js
+
+React.js, HTML5, CSS
