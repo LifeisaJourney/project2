@@ -4,7 +4,7 @@
 
 ## FIND ME A DOC!
 
-  The idea of this website is to find the nearest doctor based on the input for your zipcode.
+  The idea of this website is to find the nearest doctor based on the input for your zipcode. There is a ten mile radius on search, and every search brings up to 10 practices. 
 
 <br>
 
