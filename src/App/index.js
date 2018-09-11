@@ -14,7 +14,6 @@ export default class App extends Component {
       lat: 40.738,
       lng: -73.992,
       zipcode: "",
-      
     }
 
     this.handleUpdateInput = this.handleUpdateInput.bind(this)
@@ -24,6 +23,7 @@ export default class App extends Component {
   handleUpdateInput(event) {
     this.setState({ zipcode: event.target.value })
   }
+
   submitButton(task) {
     const geocoder = new window.google.maps.Geocoder()
     geocoder.geocode(
@@ -53,7 +53,6 @@ export default class App extends Component {
     
     const httpResponse = await fetch(`https://api.betterdoctor.com/2016-03-01/practices?${query}`)
     const body = await httpResponse.json();
-
     this.setState({
       data: body.data.filter((practice) => practice.within_search_area),
     });
@@ -63,16 +62,21 @@ export default class App extends Component {
       container: 'mapbox',
       style: 'mapbox://styles/mapbox/streets-v10',
       center: [this.state.lng, this.state.lat],
-      zoom: 14,
-      minZoom: 12,
-      maxZoom: 16,
+      zoom: 15,
+      minZoom: 13,
+      maxZoom: 17,
     });
    
-    
+    map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+          enableHighAccuracy: true
+        },
+      trackUserLocation: true
+      }));
+
     this.state.data.forEach((practice) => {
       var popup = new mapboxgl.Popup({ offset: 25 }).setText(practice.name)
       new mapboxgl.Marker().setLngLat([practice.lon, practice.lat]).setPopup(popup).addTo(map)
-
     });
   }
 
